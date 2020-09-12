@@ -1,0 +1,16 @@
+/*
+ * utn.h
+ *
+ *  Created on: 30 ago. 2020
+ *      Author: maximiliano
+ */
+
+#ifndef UTN_H_
+#define UTN_H_
+#define MIN -2147483648
+#define MAX	 2147483647
+int utn_getNumero(long int* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos);
+int sumar (long int primerNumero,long int segundoNumero, long int* resultado);
+
+
+#endif /* UTN_H_ */

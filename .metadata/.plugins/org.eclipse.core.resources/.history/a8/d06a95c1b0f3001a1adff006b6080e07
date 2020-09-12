@@ -1,0 +1,78 @@
+/*
+ ============================================================================
+ Name        : tp_1.c
+ Author      : 
+ Version     :
+ Copyright   : Your copyright notice
+ Description : Hello World in C, Ansi-style
+ ============================================================================
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+#include "utn.h"
+
+#define MIN -2147483600
+#define MAX	 2147483600
+
+int main(void) {
+	int option;
+	long primerOperando;
+	long segundoOperando;
+	long resultadoSuma;
+
+	do{
+		printf("\n----------Menu de opciones----------\n");
+		if(utn_getNumero(&option,"\n1.Ingresar primer operando"
+								 "\n2.Ingresar segundo operando"
+								 "\n3.Calcular suma"
+								 "\n4.Calcular resta"
+								 "\n5.Calcular division"
+								 "\n6.Calcular multiplicacion"
+								 "\n7.Calcular todas las operaciones"
+								 "\n8.Salir","\nDebe indicar una opcion correcta",1,8,3) == 0)
+		{
+
+			switch(option)
+			{
+				case 1:
+						utn_getNumeroLong(&primerOperando,"Indique el primer operando","Fuera de rango permitido",MIN,MAX,3);
+
+					break;
+
+				case 2:
+						utn_getNumeroLong(&segundoOperando,"Indique el segundo operando","Fuera de rango permitido",MIN,MAX,3);
+
+					break;
+
+				case 3:
+						if(sumar(primerOperando,segundoOperando,&resultadoSuma)==0)
+						{
+							printf("\nEl resultado de la suma es: %d",resultadoSuma);
+						}
+						else
+						{
+							printf("\nError en la suma");
+						}
+
+					break;
+
+				case 4:
+
+					break;
+
+				case 5:
+
+					break;
+
+				case 6:
+
+					break;
+			}
+
+		}
+
+
+	}while(option!=8);
+	return EXIT_SUCCESS;
+}

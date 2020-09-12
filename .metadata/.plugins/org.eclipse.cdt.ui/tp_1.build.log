@@ -1,0 +1,6 @@
+14:28:59 **** Incremental Build of configuration Debug for project tp_1 ****
+make all 
+make: No se hace nada para 'all'.
+
+14:28:59 Build Finished. 0 errors, 0 warnings. (took 161ms)
+

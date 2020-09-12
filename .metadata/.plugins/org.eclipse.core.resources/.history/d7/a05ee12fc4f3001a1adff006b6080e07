@@ -1,0 +1,221 @@
+/*
+ * utn.c
+ *
+ *  Created on: 30 ago. 2020
+ *      Author: maximiliano
+ */
+
+#include <stdio.h>
+#include <stdio_ext.h>
+#include <stdlib.h>
+#include "utn.h"
+#define MN -2147483600
+#define MX	 2147483600
+
+/**
+	 *\ brief La función toma un número indicado por el usuario y lo guarda en el puntero resultado
+	 * \param pResultado: en este puntero la función guarda el número que indica el usuario
+	 * \param minimo: es el numero minimo posible que puede indicar el usuario
+	 * \param maximo: es el numero maximo posible que puede indicar el usuario
+	 * \param reintentos: es el numero maximo posible de reintentos que tiene el usuario si indica un numero fuera del rango mínimo - máximo
+	 * \param bufferInt: es la variable auxiliar que se utiliza para interactuar con el usuario
+	 * \return esta función retorna -1 si la función no se concreta y devuelve un 0 si todo se ejecuta correctamente
+	 */
+int utn_getNumero(int* pResultado,double primerOperando,double segundoOperando,int minimo,int maximo,int reintentos)
+{
+		int retorno = -1;
+		int bufferInt;
+
+		if(pResultado != NULL && minimo <= maximo && reintentos >=0)
+		{
+			do{
+				printf("\n1.Ingresar primer operando\t%.2f"
+					   "\n2.Ingresar segundo operando\t%.2f"
+					   "\n3.Calcular la suma"
+					   "\n4.Calcular la resta"
+					   "\n5.Calcular la division"
+					   "\n6.Calcular la multiplicacion"
+					   "\n7.Calcular factorial"
+					   "\n8.Calcular todas las operaciones"
+					   "\n9.Salir",primerOperando,segundoOperando);
+				__fpurge(stdin);
+				scanf("%d",&bufferInt);
+
+				if(bufferInt >= minimo && bufferInt <= maximo)
+				{
+					*pResultado = bufferInt;
+					retorno = 0;
+					break;
+
+				}
+				else {
+					printf("\nOpcion incorrecta");
+					reintentos--;
+				}
+
+			}while(reintentos>= 0);
+
+
+		}
+		else
+		{
+			printf("\nReintentos agotados. vuelva a iniciar");
+		}
+
+		return retorno;
+
+}
+int utn_getNumeroDouble(double * pResultado,char* mensaje,char* mensajeError,double  minimo,double  maximo,double  reintentos)
+{
+	int retorno = -1;
+	double  bufferInt;
+
+			if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >=0)
+			{
+				printf("%s",mensaje);
+				__fpurge(stdin);
+				scanf("%lf",&bufferInt);
+
+				do{
+				if(bufferInt >= minimo && bufferInt <= maximo)
+				{
+					*pResultado = bufferInt;
+					retorno = 0;
+					break;
+
+				}
+				else {
+					printf("%s",mensajeError);
+					reintentos--;
+				}
+
+				}while(reintentos>= 0);
+
+
+			}
+
+			return retorno;
+
+}
+int sumar (double  primerNumero,double  segundoNumero, double * resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX )
+	{
+		*resultado = primerNumero + segundoNumero;
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
+
+int restar (double  primerNumero,double  segundoNumero, double * resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX )
+	{
+		*resultado = primerNumero - segundoNumero;
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
+
+int dividir (double  primerNumero,double  segundoNumero, double* resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX && segundoNumero!=0)
+	{
+		*resultado = (double)primerNumero / segundoNumero;
+	}
+	else if(segundoNumero == 0)
+	{
+		printf("\nLa divisiòn por Cero (0) no es posible");
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
+int multiplicar (double  primerNumero,double  segundoNumero, double * resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX )
+	{
+		*resultado = primerNumero * segundoNumero;
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
+
+int todasOperacionesJuntas(double primerNumero,double segundoNumero,double* resultadoMultiplicacion,
+						   double* resultadoSuma,double*resultadoResta,double* resultadoDivision)
+{
+	int retorno = -1;
+	double bufferSuma;
+	double bufferResta;
+	double bufferMulti;
+	double bufferDiv;
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX )
+	{
+		multiplicar(primerNumero,segundoNumero,&bufferMulti);
+		sumar(primerNumero,segundoNumero,&bufferSuma);
+		restar(primerNumero,segundoNumero,&bufferResta);
+		dividir(primerNumero,segundoNumero,&bufferDiv);
+	}
+	if(bufferDiv>=MN && bufferDiv <= MX && bufferMulti >= MN && bufferMulti <= MX && bufferResta >= MN && bufferResta <= MX &&
+		bufferSuma>= MN && bufferSuma<= MX)
+	{
+		retorno = 0;
+		*resultadoDivision = bufferDiv;
+		*resultadoMultiplicacion = bufferMulti;
+		*resultadoResta = bufferResta;
+		*resultadoSuma = bufferSuma;
+	}
+
+	return retorno;
+}
+
+int factorial (double numero,double* resultado)
+{
+	int i;
+	double factorial;
+	int retorno = -1;
+
+	if(numero==0)
+	{
+		*resultado = 1;
+		retorno = 0;
+	}
+	else
+	{
+		for(i=1;i<=numero;i++)
+		{
+			factorial*=i;
+		}
+	}
+	if(factorial>= MN && factorial <= MX )
+	{
+		*resultado = factorial;
+		retorno=0;
+	}
+
+	return retorno;
+
+}

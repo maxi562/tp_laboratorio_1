@@ -1,0 +1,144 @@
+/*
+ * utn.c
+ *
+ *  Created on: 30 ago. 2020
+ *      Author: maximiliano
+ */
+
+#include <stdio.h>
+#include <stdio_ext.h>
+#include <stdlib.h>
+#include "utn.h"
+#define MN -2147483600
+#define MX	 2147483600
+
+/**
+	 *\ brief La función toma un número indicado por el usuario y lo guarda en el puntero resultado
+	 * \param mensaje: es el mensaje que se le indica al usuario para que indique el número
+	 * \param mensajeError: en el caso que el usuario indique un numero fuera del rango devuelve este mensaje de error
+	 * \param pResultado: en este puntero la función guarda el número que indica el usuario
+	 * \param minimo: es el numero minimo posible que puede indicar el usuario
+	 * \param maximo: es el numero maximo posible que puede indicar el usuario
+	 * \param reintentos: es el numero maximo posible de reintentos que tiene el usuario si indica un numero fuera del rango mínimo - máximo
+	 * \param bufferInt: es la variable auxiliar que se utiliza para interactuar con el usuario
+	 * \return esta función retorna -1 si la función no se concreta y devuelve un 0 si todo se ejecuta correctamente
+	 */
+int utn_getNumero(int* pResultado,char* mensaje,char* mensajeError,int minimo,int maximo,int reintentos)
+{
+		int retorno = -1;
+		int bufferInt;
+
+		if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >=0)
+		{
+			do{
+				printf("%s",mensaje);
+				__fpurge(stdin);
+				scanf("%d",&bufferInt);
+
+				if(bufferInt >= minimo && bufferInt <= maximo)
+				{
+					*pResultado = bufferInt;
+					retorno = 0;
+					break;
+
+				}
+				else {
+					printf("%s",mensajeError);
+					reintentos--;
+				}
+
+			}while(reintentos>= 0);
+
+
+		}
+		else
+		{
+			printf("\nReintentos agotados. vuelva a iniciar");
+		}
+
+		return retorno;
+
+}
+int utn_getNumeroDouble(double * pResultado,char* mensaje,char* mensajeError,double  minimo,double  maximo,double  reintentos)
+{
+	int retorno = -1;
+	double  bufferInt;
+
+			if(pResultado != NULL && mensaje != NULL && mensajeError != NULL && minimo <= maximo && reintentos >=0)
+			{
+				printf("%s",mensaje);
+				__fpurge(stdin);
+				scanf("%d",&bufferInt);
+
+				do{
+				if(bufferInt >= minimo && bufferInt <= maximo)
+				{
+					*pResultado = bufferInt;
+					retorno = 0;
+					break;
+
+				}
+				else {
+					printf("%s",mensajeError);
+					reintentos--;
+				}
+
+				}while(reintentos>= 0);
+
+
+			}
+
+			return retorno;
+
+}
+int sumar (long  primerNumero,long  segundoNumero, long * resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX )
+	{
+		*resultado = primerNumero + segundoNumero;
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
+
+int restar (long  primerNumero,long  segundoNumero, long * resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX )
+	{
+		*resultado = primerNumero - segundoNumero;
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
+
+int dividir (double  primerNumero,double  segundoNumero, double* resultado)
+{
+	int retorno = -1;
+
+	if(primerNumero>= MN && primerNumero <= MX && segundoNumero>= MN && segundoNumero <= MX && segundoNumero!=0)
+	{
+		*resultado = (double)primerNumero / segundoNumero;
+	}
+	else if(segundoNumero == 0)
+	{
+		printf("\nLa divisiòn por Cero (0) no es posible");
+	}
+	if(*resultado>= MN && *resultado <= MX )
+	{
+		retorno=0;
+	}
+
+	return retorno;
+}
