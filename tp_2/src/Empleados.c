@@ -25,7 +25,7 @@ int emp_print(Empleado* pElemento)
 	if(pElemento != NULL && pElemento->isEmpty == 0)
 	{
 		retorno=0;
-		printf("\nID: %d - %s - %s - %.2f - %d",pElemento->id,pElemento->nombre,pElemento->apellido,pElemento->salario,pElemento->sector);
+		printf("\n %5d %10s %10s %10.2f %5d",pElemento->id,pElemento->nombre,pElemento->apellido,pElemento->salario,pElemento->sector);
 	}
 	return retorno;
 }
@@ -44,6 +44,7 @@ int emp_printEmployees(Empleado* array,int limite)
 	if(array != NULL && limite > 0)
 	{
 		respuesta = 0;
+		printf("\n %5s %10s %10s %10s %5s","ID","Nombre","Apellido","Salario","Sector");
 		for(i=0;i<limite;i++)
 		{
 			emp_print(&array[i]);

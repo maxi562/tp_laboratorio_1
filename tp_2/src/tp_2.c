@@ -73,7 +73,7 @@ int main(void) {
 						if(indice>=0 &&
 								!emp_modificarEmployee(arrayEmp,CANT_EMPLEADOS,indice))
 						{
-							printf("\nModificaciòn realizada con exito");
+							printf("\nModificación realizada con éxito");
 						}
 
 					}
@@ -89,22 +89,29 @@ int main(void) {
 						if(indice >=0 &&
 								!emp_removeEmployee(arrayEmp,CANT_EMPLEADOS,indice))
 						{
-							printf("Baja realizada con exito");
+							printf("Baja realizada con éxito");
 						}
 
 					}
 					break;
 
 				case 4:
-					printf("\n- - - Actual - - -");
+					printf("\n##########================================##########\n");
+					printf("%30s","Desordenados");
+					printf("\n====================================================\n");
 					emp_printEmployees(arrayEmp,CANT_EMPLEADOS);
 					emp_sortEmployees(arrayEmp,CANT_EMPLEADOS);
-					printf("\n\n- - - Ordenados - - -");
+					printf("\n====================================================\n");
+					printf("%30s","Ordenados");
+					printf("\n====================================================\n");
 					emp_printEmployees(arrayEmp,CANT_EMPLEADOS);
 
 					break;
 
 				case 5:
+					printf("\n##########================================##########\n");
+					printf("%35s","Informe Salarios");
+					printf("\n====================================================\n");
 					emp_informEmployees(arrayEmp,CANT_EMPLEADOS);
 
 
