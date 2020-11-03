@@ -8,6 +8,11 @@
 
 #define NOMBRE 100
 #define NUMEROS 50
+
+typedef struct{
+	int id;
+	int posicion;
+}eBaja;
 /*
  * Construye un empleado en memoria
  */
@@ -237,16 +242,16 @@ int employee_buscar(LinkedList* this,char* nombre,int* id)
 	int horasAux;
 	int sueldoAux;
 	int idSeleccion=-1;
-	int* listaIdEncontrados;
+	eBaja listaIdEncontrados[10];
 	int contador = 0;
-
-	listaIdEncontrados = (int*)malloc(sizeof(int)*10);
+	int len;
 
 	if(this!=NULL && nombre != NULL)
 	{
 		printf("%3s %8s %5s %5s\n","ID","NOMBRE","HORAS","SUELDO");
 		printf("----------------------------------------------\n");
-		for(i=0;i<ll_len(this);i++)
+		len = ll_len(this);
+		for(i=0;i<len;i++)
 		{
 			empleadoAux = ll_get(this,i);
 			employee_getNombre(empleadoAux,nombreAux);
@@ -255,12 +260,12 @@ int employee_buscar(LinkedList* this,char* nombre,int* id)
 				employee_getId(empleadoAux,&idAux);
 				employee_getSueldo(empleadoAux,&sueldoAux);
 				employee_getHorasTrabajadas(empleadoAux,&horasAux);
-				if(listaIdEncontrados !=NULL)
-				{
-					*(listaIdEncontrados+contador) = idAux;
-					contador++;
-					employee_imprimirEmpleado(empleadoAux);
-				}
+
+				listaIdEncontrados[contador].id = idAux;
+				listaIdEncontrados[contador].posicion = i;
+				contador++;
+				employee_imprimirEmpleado(empleadoAux);
+
 
 			}
 
@@ -270,9 +275,9 @@ int employee_buscar(LinkedList* this,char* nombre,int* id)
 				utn_getNumero(&idSeleccion,"De la lista, indique el ID del empleado\n","Error, ID incorrecto",1,10000,2);
 				for(j=0;j<contador;j++)
 				{
-					if(idSeleccion == *(listaIdEncontrados+j))
+					if(idSeleccion == listaIdEncontrados[j].id)
 					{
-						*id = idSeleccion;
+						*id = listaIdEncontrados[j].posicion;
 						retorno = 1;
 					}
 				}

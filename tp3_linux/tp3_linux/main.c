@@ -25,6 +25,7 @@ int main()
 {
    int option = 0;
    int idSiguiente;
+   int idUltimo;
 
     LinkedList* listaEmpleados = ll_newLinkedList();
     do{
@@ -49,9 +50,10 @@ int main()
             		break;
 
             	case 3:
-            		if(controller_addEmployee(listaEmpleados,idSiguiente))
+            		if(controller_addEmployee(listaEmpleados,idSiguiente,&idUltimo))
             		{
             			printf("Alta Exitosa\n");
+            			idSiguiente = idUltimo;
             		}
             		break;
 
@@ -94,6 +96,13 @@ int main()
             		{
             			printf("\nSalvado exitoso");
             		}
+            		break;
+            	//case 10:
+            		//if(controller_saveLastId(&idUltimo,listaEmpleados))
+            		//{
+            		//	printf("Ok último ID %d",idUltimo);
+            		//}
+            		//break;
     		}
     	}
     	else

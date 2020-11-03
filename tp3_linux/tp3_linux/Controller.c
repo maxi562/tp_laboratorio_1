@@ -59,13 +59,14 @@ int controller_loadFromBinary(char* path , LinkedList* pArrayListEmployee)
  * \return int
  *
  */
-int controller_addEmployee(LinkedList* pArrayListEmployee,int id)
+int controller_addEmployee(LinkedList* pArrayListEmployee,int id,int* idSiguiente)
 {
 
 	char nombreAux[NOMBRES];
 	int sueldoAux;
 	int horasAux;
 	Employee* empleadoAux;
+	int retorno = 0;
 
 
 	if(pArrayListEmployee!=NULL && id >= 0 &&
@@ -75,9 +76,13 @@ int controller_addEmployee(LinkedList* pArrayListEmployee,int id)
 	{
 		empleadoAux = employee_newParametrosAlta(id,nombreAux,horasAux,sueldoAux);
 		ll_add(pArrayListEmployee,empleadoAux);
+		retorno = 1;
+		*idSiguiente = id+1;
+
+
 	}
 
-	return 1;
+	return retorno;
 }
 
 /** \brief Modificar datos de empleado
@@ -154,11 +159,11 @@ int controller_removeEmployee(LinkedList* pArrayListEmployee)
     tomarDatos(nombreAux,200,"Indique el nombre del Empleado\n");
     if(employee_buscar(pArrayListEmployee,nombreAux,&idAux))
     {
-    	empleadoAux = ll_get(pArrayListEmployee,idAux-1);
+    	empleadoAux = ll_get(pArrayListEmployee,idAux);
     	employee_imprimirEmpleado(empleadoAux);
     	if(!controller_validadoraSioNo("\n¿Esta seguro que desea dar de baja?\n1.SI\n2.NO"))
     	{
-    		ll_remove(pArrayListEmployee,idAux-1);
+    		ll_remove(pArrayListEmployee,idAux);
     		retorno = 1;
     	}
     }
@@ -447,3 +452,40 @@ int controller_validadoraSioNo(char* mensaje)
 
 	return retorno;
 }
+
+/*int controller_saveLastId(int* lastId,LinkedList* pArrayEmployee, char*path)
+{
+	int retorno = 0;
+	Employee* auxiliar;
+	int i;
+	int maximo;
+	int idAuxiliar;
+	FILE* pArchivo;
+
+	if(lastId != NULL && pArrayEmployee != NULL)
+	{
+		for(i=0;i<ll_len(pArrayEmployee);i++)
+		{
+			auxiliar = ll_get(pArrayEmployee,i);
+			employee_getId(auxiliar,&idAuxiliar);
+			if(i==0 || idAuxiliar > maximo)
+			{
+				maximo = idAuxiliar;
+			}
+		}
+	}
+	if(maximo > 0)
+	{
+		*lastId = maximo;
+		pArchivo = fopen(path,"wb");
+		if(pArchivo != NULL)
+		{
+			fwrite(&maximo,sizeof(int),1,pArchivo);
+		}
+		fclose(pArchivo);
+		retorno = 1;
+	}
+	return retorno;
+}*/
+
+
