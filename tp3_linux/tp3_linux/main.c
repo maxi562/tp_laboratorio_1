@@ -24,8 +24,10 @@
 int main()
 {
    int option = 0;
-   int idSiguiente;
+   int idCargaTexto;
    int idUltimo;
+   int idArchivo;
+   int idSiguiente;
 
     LinkedList* listaEmpleados = ll_newLinkedList();
     do{
@@ -34,7 +36,9 @@ int main()
     		switch(option)
     		{
             	case 1:
-            		idSiguiente = controller_loadFromText("data.csv",listaEmpleados);
+            		idCargaTexto = controller_loadFromText("data.csv",listaEmpleados);
+            		controller_readLastId(&idArchivo,"lastID.dat");
+            		idSiguiente = controller_idSiguiente(idArchivo,idCargaTexto);
             		if(idSiguiente > 0)
             		{
             			printf("Carga exitosa\n");
@@ -97,12 +101,12 @@ int main()
             			printf("\nSalvado exitoso");
             		}
             		break;
-            	//case 10:
-            		//if(controller_saveLastId(&idUltimo,listaEmpleados))
-            		//{
-            		//	printf("Ok último ID %d",idUltimo);
-            		//}
-            		//break;
+            	case 10:
+            		if(controller_saveLastId(&idUltimo,listaEmpleados,"lastID.dat"))
+            		{
+            			printf("Ok último ID %d",idUltimo);
+            		}
+            		break;
     		}
     	}
     	else

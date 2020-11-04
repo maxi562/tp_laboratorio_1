@@ -453,7 +453,7 @@ int controller_validadoraSioNo(char* mensaje)
 	return retorno;
 }
 
-/*int controller_saveLastId(int* lastId,LinkedList* pArrayEmployee, char*path)
+int controller_saveLastId(int* lastId,LinkedList* pArrayEmployee, char*path)
 {
 	int retorno = 0;
 	Employee* auxiliar;
@@ -486,6 +486,40 @@ int controller_validadoraSioNo(char* mensaje)
 		retorno = 1;
 	}
 	return retorno;
-}*/
+}
 
+int controller_readLastId(int* lastId, char*path)
+{
+	int retorno = 0;
+
+	FILE* pArchivo;
+	int maximo;
+
+	pArchivo = fopen(path,"rb");
+	if(pArchivo!=NULL)
+	{
+		fread(&maximo,sizeof(int),1,pArchivo);
+		*lastId = maximo;
+		retorno = 1;
+	}
+	if(pArchivo == NULL)
+	{
+		exit(1);
+	}
+	fclose(pArchivo);
+
+	return retorno;
+}
+
+int controller_idSiguiente(int idArchiv,int idCarga)
+{
+	if(idArchiv > idCarga )
+	{
+		return idArchiv;
+	}
+	else
+	{
+		return idCarga;
+	}
+}
 

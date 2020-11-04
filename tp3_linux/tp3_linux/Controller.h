@@ -12,4 +12,6 @@ int controller_modifMenu(int* option);
 int controller_validadoraSioNo(char* mensaje);
 int controller_sortCriterioMenu(int* option);
 int controller_sortOrdenMenu(int* option);
-int controller_saveLastId(int* lastId,LinkedList* pArrayEmployee);
+int controller_saveLastId(int* lastId,LinkedList* pArrayEmployee, char*path);
+int controller_readLastId(int* lastId, char*path);
+int controller_idSiguiente(int idArchiv,int idCarga);
