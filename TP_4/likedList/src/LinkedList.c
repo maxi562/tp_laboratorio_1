@@ -18,6 +18,11 @@ LinkedList* ll_newLinkedList(void)
     LinkedList* this= NULL;
 
     this = (LinkedList*) malloc(sizeof(LinkedList));
+    if(this!=NULL)
+    {
+    	this->pFirstNode = NULL;
+    	this->size = 0;
+    }
 
     return this;
 }
@@ -463,7 +468,7 @@ void* ll_pop(LinkedList* this,int index)
 int ll_contains(LinkedList* this, void* pElement)
 {
     int returnAux = -1;
-    Node* nodoAux;
+    void* pElemAux;
     int len = ll_len(this);
     int i;
 
@@ -472,10 +477,11 @@ int ll_contains(LinkedList* this, void* pElement)
     	returnAux = 0;
     	for(i=0;i<len;i++)
     	{
-    		nodoAux = getNode(this,i);
-    		if(nodoAux->pElement == pElement)
+    		pElemAux =ll_get(this,i);
+    		if(pElemAux == pElement)
     		{
     			returnAux = 1;
+    			break;
     		}
     	}
     }
@@ -495,33 +501,32 @@ int ll_contains(LinkedList* this, void* pElement)
 int ll_containsAll(LinkedList* this,LinkedList* this2)
 {
     int returnAux = -1;
+
     int lenThisDos = ll_len(this2);
     int i;
-    Node* nodoAux;
-    int contador = 0;
+    void* pElementAux;
+    int contains;
+
 
     if(this != NULL && this2 != NULL)
     {
-    	returnAux = 0;
+    	returnAux = 1;
     	for(i=0;i<lenThisDos;i++)
     	{
-    		nodoAux = getNode(this2,i);
-    		if(ll_contains(this,nodoAux->pElement)==1)
+    		pElementAux = ll_get(this2,i);
+    		contains = ll_contains(this,pElementAux);
+    		if(contains==0 || contains ==-1)
     		{
-    				contador++;
-    				continue;
+    			returnAux = 0;
+    			break;
     		}
 
     	}
-    	if(contador == lenThisDos)
-    	{
-    		returnAux = 1;
 
-    	}
     }
-    printf("contador: %d - len: %d - retorno: %d\n",contador, lenThisDos,returnAux);
 
     return returnAux;
+
 }
 
 /** \brief Crea y retorna una nueva lista con los elementos indicados
@@ -596,7 +601,47 @@ LinkedList* ll_clone(LinkedList* this)
 int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
 {
     int returnAux =-1;
+    int funcion;
+    int i;
+    int len = ll_len(this);
+    int swap;
+    Node* nodo1;
+    Node* nodo2;
+    Node* nodoAux;
+    Node* nodoAnt;
 
+    if(this!=NULL && pFunc != NULL && (order == 0 || order == 1))
+    {
+    	returnAux = 0;
+
+    	do
+    	{
+    		swap = 0;
+    		for(i=0;i<len-1;i++)
+    		{
+    			nodoAnt = getNode(this,i-1);
+    			nodo1 = getNode(this,i);
+    			nodo2 = getNode(this,i+1);
+    			funcion = pFunc(nodo1->pElement,nodo2->pElement);
+    				if((funcion == 1 && order == 1) || (funcion == -1 && order == 0) )
+    				{
+    					swap = 1;
+    					nodoAux = nodo2;
+    					nodo1->pNextNode = nodoAux->pNextNode;
+    					nodo2->pNextNode = nodo1;
+    					if(i==0)
+    					{
+    						this->pFirstNode = nodo2;
+    					}
+    					else
+    					{
+    						nodoAnt->pNextNode = nodo2;
+    					}
+
+    				}
+    		}
+    	}while(swap);
+    }
 
     return returnAux;
 
